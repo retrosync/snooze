@@ -8,8 +8,9 @@ describe Snooze::Button, 'button' do
     dry_button.dry_run.should == true
   end
 
-  it "should validate the clock_id"
-
+  it "should capture the clock id" do
+    button.clock_id.should == '8765-1234'
+  end
 
   it "should support snooze!" do
     button.snooze!

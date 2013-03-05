@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.rdoc_options << '--title' << s.name << '--main' << 'README.rdoc' << '--line-numbers' << '--inline-source'
   s.extra_rdoc_files = ['README.rdoc']
 
+  s.add_dependency('faraday')
+
   s.add_development_dependency('rake')
   s.add_development_dependency('rspec', '~> 2.8')
   s.add_development_dependency('guard-rspec')

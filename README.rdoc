@@ -4,11 +4,14 @@ For devops who run recurring jobs like rake tasks or bas scripts,
 Snooze.io is a notification service that tells you when something is wrong.
 Unlike just alerting when a job breaks, Snooze also alerts when a job did not run at all.
 
+* Simple
+* Runs on all rubies {<img src="https://travis-ci.org/retrosync/snooze.png?branch=master" alt="Build Status" />}[https://travis-ci.org/retrosync/snooze]
+
 == Installation & basic usage
 
 Log in to http://www.snooze.io and create your account
 
-Install Snooze a Ruby gem:
+Install the Snooze gem:
 
   $ gem install snooze
 
