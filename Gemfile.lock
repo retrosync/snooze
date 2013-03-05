@@ -2,12 +2,15 @@ PATH
   remote: .
   specs:
     snooze (0.2.0)
+      faraday
 
 GEM
   remote: http://rubygems.org/
   specs:
     coderay (1.0.8)
     diff-lcs (1.2.1)
+    faraday (0.8.5)
+      multipart-post (~> 1.1)
     guard (1.6.2)
       listen (>= 0.6.0)
       lumberjack (>= 1.0.2)
@@ -20,6 +23,7 @@ GEM
     listen (0.7.2)
     lumberjack (1.0.2)
     method_source (0.8.1)
+    multipart-post (1.1.5)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
