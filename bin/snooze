@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+$:.unshift(File.expand_path('../lib', File.dirname(__FILE__)))
+require 'snooze'
+
+puts "Snooze gem, by Bart ten Brinke - version #{Snooze::VERSION}"
+puts "Website: http://snooze.io"
