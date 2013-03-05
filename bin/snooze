@@ -3,6 +3,42 @@
 
 $:.unshift(File.expand_path('../lib', File.dirname(__FILE__)))
 require 'snooze'
+require 'optparse'
 
-puts "Snooze gem, by Bart ten Brinke - version #{Snooze::VERSION}"
-puts "Website: http://snooze.io"
+## Variables
+allowed_actions = ['snooze', 'backtrace', 'ping']
+options = {}
+
+optparse = OptionParser.new do |opts|
+  # Set a banner, displayed at the top
+  # of the help screen.
+  opts.banner = "Snooze gem, by Bart ten Brinke - version #{Snooze::VERSION}\nWebsite: http://snooze.io\n\n:Usage: snooze [options] clock_id\n\n"
+
+  # Define the options, and what they do
+  options[:verbose] = false
+  opts.on( '-v', '--verbose', 'Output more information' ) do
+    options[:verbose] = true
+  end
+
+  options[:dry_run] = false
+  opts.on( '-d', '--dry-run', 'Go through all the normal steps, but not actually Snooze anything.' ) do
+    options[:dry_run] = true
+  end
+
+  opts.on( '-h', '--help', 'Display this screen' ) do
+   puts opts
+   exit
+  end
+end
+
+optparse.parse!
+if ARGV.empty? || ARGV.length != 1
+  puts optparse
+  exit(-1)
+end
+
+clock_id = ARGV[0]
+
+require 'snooze'
+snooze_instance = Snooze::Button.new(options)
+snooze_instance.snooze!

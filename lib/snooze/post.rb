@@ -1,0 +1,3 @@
+class Snooze::Post
+
+end
