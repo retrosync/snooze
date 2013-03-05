@@ -28,6 +28,6 @@ Gem::Specification.new do |s|
 
   # The files and test_files directives are set automatically by the release script.
   # Do not change them by hand, but make sure to add the files to the git repository.
-  s.files      = %w(.gitignore)
+  s.files      = %w(.gitignore Gemfile Gemfile.lock LICENSE README.rdoc Rakefile bin/snooze lib/snooze.rb snooze.gemspec spec/spec_helper.rb tasks/github-gem.rake)
   s.test_files = %w()
 end
