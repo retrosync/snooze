@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name    = "Snooze"
+  s.name    = "snooze"
 
   # Do not set the version and date field manually, this is done by the release script
   s.version = "0.1.0"
