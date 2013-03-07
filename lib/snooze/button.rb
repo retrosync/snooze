@@ -26,6 +26,7 @@ class Snooze::Button
     end
   end
 
+  private
   # Handle a post response
   # The block given should be a Snooze::Post class function.
   def handle_post_response(&block)
@@ -40,7 +41,6 @@ class Snooze::Button
     exit_code
   end
 
-  private
   def log(msg)
     puts msg if @verbose
   end

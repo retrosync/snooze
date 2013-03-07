@@ -40,5 +40,5 @@ end
 clock_id = ARGV[0]
 
 require 'snooze'
-snooze_instance = Snooze::Button.new(options)
+snooze_instance = Snooze::Button.new(clock_id, options)
 exit(snooze_instance.snooze!)

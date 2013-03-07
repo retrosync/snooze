@@ -4,8 +4,9 @@ For devops who run recurring jobs like rake tasks or bas scripts,
 Snooze.io is a notification service that tells you when something is wrong.
 Unlike just alerting when a job breaks, Snooze also alerts when a job did not run at all.
 
-* Simple
+* Simple heartbeat monitoring for all your tasks / scripts
 * Runs on all rubies {<img src="https://travis-ci.org/retrosync/snooze.png?branch=master" alt="Build Status" />}[https://travis-ci.org/retrosync/snooze]
+* Runs from bash
 
 == Installation & basic usage
 
@@ -15,12 +16,38 @@ Install the Snooze gem:
 
   $ gem install snooze
 
-TODO: ADD More info here
+Call the Snooze gem from the command line with your clock id to Snooze a clock:
+
+  $ snooze 1234-1234-abcd-abcd
+
+== Advanced usage
+Test the Snoozing of a clock and the connection to Snooze.io:
+
+  $ snooze --dry-run 1234-1234-abcd-abcd
+
+Get more debug output while Snoozing of a clock:
+
+  $ snooze --verbose 1234-1234-abcd-abcd
+
+Snoozing a clock from Ruby / Rake task:
+
+  require 'snooze'
+  snooze_instance = Snooze::Button.new('1234-1234-abcd-abcd')
+  snooze_instance.snooze!
+
+Catching exceptions in your Ruby application. If your code does not throw an exception,
+your clock will automatically be Snoozed.
+
+  require 'snooze'
+  snooze_instance = Snooze::Button.new('1234-1234-abcd-abcd')
+  snooze_instance.with_backtrace do
+    puts 'your code goes here'
+  end
 
 == Additional information
 
 Snooze was designed and built by Bart ten Brinke from Retrosync.
-If you have any issues, the fastest way to contact me is either through github or via email. (contact@snooze.io)
+If you have any issues, the fastest way to contact me is either through github or via email: contact@snooze.io
 
 * Snooze homepage: http://www.snooze.io
 * Retrosync homepage: http://www.retrosync.com
