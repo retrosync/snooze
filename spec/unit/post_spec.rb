@@ -7,6 +7,7 @@ describe Snooze::Post do
         stub.post('api/action') { [200, {}, ''] }
         stub.post('api/ping') { [200, {:id=>"1234-5678"}, ''] }
         stub.post('api/snooze') { [200, {:id=>"1234-5678"}, ''] }
+        stub.post('api/exception') { [200, {:id=>"1234-5678", :backtrace => "error\nwith\newlines"}, ''] }
       end
     end
   }
@@ -66,5 +67,36 @@ describe Snooze::Post do
       response = Snooze::Post.snooze!('1234-5679')
       response.status.should == 404
     end
+  end
+
+  describe 'exception' do
+    it "should post a backtrace to the snooze URL" do
+      Snooze::Post.stub!(:setup_connection).and_return(test_connection)
+      response = Snooze::Post.exception!('1234-5678', "error\nwith\newlines")
+      response.status.should == 200
+    end
+
+    it "should handle unkown clock_ids" do
+      test_connection = Faraday.new do |builder|
+        builder.adapter :test do |stub|
+          stub.post('api/exception') { [404, {:id=>"1234-5679", :backtrace => "error\nwith\newlines"}, ''] }
+        end
+      end
+
+      Snooze::Post.stub!(:setup_connection).and_return(test_connection)
+      response = Snooze::Post.exception!('1234-5679', "error\nwith\newlines")
+      response.status.should == 404
+    end
+  end
+
+  describe 'execute!' do
+    it "should retry five times" do
+      exception = Faraday::Error::TimeoutError.new('')
+      Snooze::Post.stub!(:setup_connection).and_raise(exception)
+      Snooze::Post.stub!(:sleep_for_a_while).and_return(true)
+      Snooze::Post.should_receive(:execute!).exactly(5).times.and_call_original
+      expect { Snooze::Post.execute!('noop', {:a => 'b'}) }.to raise_error(Snooze::ConnectionError)
+    end
+
   end
 end

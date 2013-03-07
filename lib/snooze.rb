@@ -9,5 +9,6 @@ end
 
 require 'faraday'
 require 'uri'
+require 'snooze/connection_error'
 require 'snooze/button'
 require 'snooze/post'
