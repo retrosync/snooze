@@ -11,23 +11,25 @@ class Snooze::Post
   end
 
   # Execute an HTTP post
-  def self.execute!(action, post_parameters, retries = 4)
+  def self.execute!(action, post_body, retries = 4)
     uri = self.generate_uri_from_action(action)
     response = nil
 
     begin
       connection = self.setup_connection(uri)
 
-      response = connection.send('post', uri.path, post_parameters) do |request|
+      response = connection.post uri.path do |request|
         request.headers['Content-Type'] = 'application/json'
         request.options[:timeout] = 5
         request.options[:open_timeout] = 2
+        request.body = post_body
       end
+
       raise Faraday::Error::ConnectionFailed.new('') if response.status == 500
     rescue Faraday::Error::TimeoutError, Faraday::Error::ConnectionFailed, Faraday::Error::ClientError, Faraday::Error => e
       raise Snooze::ConnectionError if retries <= 0
       sleep_for_a_while(5 - retries)
-      response = self.execute!(action, post_parameters, retries-1)
+      response = self.execute!(action, post_body, retries-1)
     end
 
     response
@@ -35,17 +37,17 @@ class Snooze::Post
 
   # Ping Snooze
   def self.ping!(clock_id)
-    self.execute!('ping', :id => clock_id)
+    self.execute!('ping', "{ \"id\":\"#{clock_id}\" }" )
   end
 
   # Snooze an alarm
   def self.snooze!(clock_id)
-    self.execute!('snooze', :id => clock_id)
+    self.execute!('snooze', "{ \"id\":\"#{clock_id}\" }")
   end
 
   # Pass an exception backtrace to Snooze
   def self.exception!(clock_id, backtrace="")
-    self.execute!('exception', {:id => clock_id, :backtrace => backtrace})
+    self.execute!('exception', "{ \"id\":\"#{clock_id}\", \"backtrace\":\"#{backtrace}\" }")
   end
 
   private

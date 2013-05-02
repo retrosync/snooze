@@ -5,8 +5,13 @@ class Snooze::Button
   def initialize(clock_id, options = {})
     @clock_id = clock_id
     @dry_run = options[:dry_run] || false
-    @method = @dry_run ? :ping! : :snooze!
+    @method = :snooze!
     @verbose = options[:verbose] || false
+
+    if @dry_run
+      @method = :ping!
+      @verbose = true
+    end
   end
 
   # Send snooze! or ping! to Snooze
@@ -35,6 +40,7 @@ class Snooze::Button
       response = yield
       exit_code = 0 if response.success?
       log "Error: Snooze returned status error #{response.status}" unless response.success?
+      log "Snooze returned status message: #{response.body}" if @verbose
     rescue Snooze::ConnectionError
       log "Error: Snooze server is unreachable"
     end
