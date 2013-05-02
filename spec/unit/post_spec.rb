@@ -13,7 +13,7 @@ describe Snooze::Post do
   }
 
   it "should generate the correct path" do
-    Snooze::Post.generate_uri_from_action('test').to_s.should == 'http://api.snooze.io/api/test'
+    Snooze::Post.generate_uri_from_action('test').to_s.should == 'https://api.snooze.io/api/test'
   end
 
   it "should setup a faraday connection" do
