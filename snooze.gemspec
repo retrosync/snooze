@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.name    = "snooze"
 
   # Do not set the version and date field manually, this is done by the release script
-  s.version = "0.2.0"
-  s.date    = "2013-03-05"
+  s.version = "1.0.0"
+  s.date    = "2013-05-03"
 
   s.bindir             = 'bin'
   s.executables        = ['snooze']
@@ -32,6 +32,6 @@ Gem::Specification.new do |s|
 
   # The files and test_files directives are set automatically by the release script.
   # Do not change them by hand, but make sure to add the files to the git repository.
-  s.files      = %w(.gitignore Gemfile Gemfile.lock LICENSE README.rdoc Rakefile bin/snooze lib/snooze.rb snooze.gemspec spec/spec_helper.rb tasks/github-gem.rake)
-  s.test_files = %w()
+  s.files      = %w(.gitignore .travis.yml Gemfile Gemfile.lock Guardfile LICENSE README.rdoc Rakefile bin/snooze lib/snooze.rb lib/snooze/button.rb lib/snooze/connection_error.rb lib/snooze/post.rb snooze.gemspec spec/spec_helper.rb spec/unit/button_spec.rb spec/unit/post_spec.rb tasks/github-gem.rake)
+  s.test_files = %w(spec/unit/button_spec.rb spec/unit/post_spec.rb)
 end
